@@ -25,8 +25,19 @@ if user_input:  # once user has written message
 
     # sending user input to workflow    
     initial_state = {'messages':HumanMessage(content=user_input)} # convert user input to human message
-    response = chatbot.invoke(initial_state, config = CONFIG)
-    ai_message = response['messages'][-1].content  # extracting last most message from reponse
-    st.session_state['message_history'].append({'role':'assistant','content': ai_message})
-    with st.chat_message(name='assistant'):
-        st.text(body=ai_message)
+
+    # for no stream response
+    # response = chatbot.invoke(initial_state, config = CONFIG)
+    # ai_message = response['messages'][-1].content  # extracting last most message from reponse
+    # st.session_state['message_history'].append({'role':'assistant','content': ai_message})
+    # with st.chat_message(name='assistant'):
+    #     st.text(body=ai_message)
+
+    # for streaming response 
+    stream_object = chatbot.stream(initial_state, config=CONFIG,stream_mode='messages') # generator object by .stream method = message chunk + metadata
+    with st.chat_message('assistant'):
+        ai_message = st.write_stream(
+            message_chunk.content for message_chunk, metadata in stream_object
+        )  # to render streaming messages in streamlit we have st.write_stream method
+    st.session_state['message_history'].append({'role':'assistant','content': ai_message}) # appending list of conversation by assistant
+              
