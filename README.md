@@ -5,6 +5,7 @@ A multi-turn conversational AI chatbot built with LangGraph, OpenAI, and Streaml
 ## Features
 
 - **Persistent memory** — conversation history is retained across turns within a session using LangGraph's checkpointer
+- **Streaming responses** — AI replies are streamed token-by-token in real time using LangGraph's `stream_mode='messages'` and Streamlit's `st.write_stream`
 - **Chat UI** — clean Streamlit-based interface with chat bubbles and input field
 
 ## Tech Stack
