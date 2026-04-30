@@ -7,6 +7,8 @@ A multi-turn conversational AI chatbot built with LangGraph, OpenAI, and Streaml
 - **Persistent memory** — conversation history is retained across turns within a session using LangGraph's checkpointer
 - **Streaming responses** — AI replies are streamed token-by-token in real time using LangGraph's `stream_mode='messages'` and Streamlit's `st.write_stream`
 - **Chat UI** — clean Streamlit-based interface with chat bubbles and input field
+- **Multi-session chat** — start a new chat at any time; each session gets a unique thread ID
+- **Resume chat** — sidebar lists all past conversations; click any thread to reload and continue it
 
 ## Tech Stack
 
@@ -50,7 +52,8 @@ streamlit run frontend.py
 
 ```
 ├── backend.py        # LangGraph StateGraph definition and compiled chatbot
-├── frontend.py       # Streamlit UI
+├── frontend.py       # Streamlit UI with sidebar for session management
+├── utility.py        # Helper functions: thread ID generation, session switching, conversation loading
 ├── requirements.txt
 └── .env              # Not committed — add your own
 ```
